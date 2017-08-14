@@ -13,6 +13,7 @@ before_script:
 
 # Install mysql driver
 - docker-php-ext-install pdo_mysql
+- docker-php-ext-install pdo_pgsql
 
 # Install composer
 - curl -sS https://getcomposer.org/installer | php
@@ -32,10 +33,12 @@ variables:
 test:mysql:
   script:
   - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
+  - vendor/bin/phpunit --configuration phpunit_pgsql.xml --coverage-text
 
 # We test PHP7 with MySQL, but we allow it to fail
 test:php7:mysql:
   image: php:7
   script:
   - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
+  - vendor/bin/phpunit --configuration phpunit_pgsql.xml --coverage-text
   allow_failure: true
