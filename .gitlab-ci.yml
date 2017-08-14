@@ -8,7 +8,7 @@ cache:
 
 before_script:
 # Install git, the php image doesn't have installed
-- set -ex && apk --no-cache add postgresql-dev
+- lsb_release -a
 - apt-get update -yqq
 - apt-get install git -yqq
 
