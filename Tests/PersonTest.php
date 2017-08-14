@@ -21,25 +21,25 @@ class PersonTest extends PHPUnit_Framework_TestCase {
   }
 
   public function testHelloWorld() {
-    $helloWorld = new HelloWorld($this->pdo);
+    $person = new Person($this->pdo);
 
-    $this->assertEquals('Hello World', $helloWorld->hello());
+    $this->assertEquals('Hello World', $person->hello());
   }
 
   public function testHello() {
-    $helloWorld = new HelloWorld($this->pdo);
+    $person = new Person($this->pdo);
 
-    $this->assertEquals('Hello Bar', $helloWorld->hello('Bar'));
+    $this->assertEquals('Hello Bar', $person->hello('Bar'));
   }
 
   public function testWhat() {
-    $helloWorld = new HelloWorld($this->pdo);
+    $person = new Person($this->pdo);
 
-    $this->assertFalse($helloWorld->what());
+    $this->assertFalse($person->what());
 
-    $helloWorld->hello('Bar');
+    $person->hello('Bar');
 
-    $this->assertEquals('Bar', $helloWorld->what());
+    $this->assertEquals('Bar', $person->what());
   }
 }
 
