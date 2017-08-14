@@ -23,7 +23,7 @@ before_script:
 
 services:
 - mysql
-- pgsql
+- postgres
 
 variables:
   # Configure mysql service (https://hub.docker.com/_/mysql/)
