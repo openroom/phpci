@@ -1,5 +1,5 @@
 # Select image from https://hub.docker.com/_/php/
-image: php:7.1
+image: php:7
 
 # Select what we should cache
 cache:
@@ -36,7 +36,7 @@ variables:
 
 # We test PHP7 with MySQL, but we allow it to fail
 test:php7:mysql:
-  image: php:7.1
+  image: php:7
   script:
   - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
   - vendor/bin/phpunit --configuration phpunit_pgsql.xml --coverage-text
