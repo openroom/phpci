@@ -8,9 +8,8 @@ cache:
 
 before_script:
 # Install git, the php image doesn't have installed
-- cat /etc/apt/sources.list
-- ll /etc/apt/sources.list.d
 - apt-get update -yqq
+- apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo pdo_pgsql
 - apt-get install git -yqq
 - apt-get install php-pgsql -yqq
 
