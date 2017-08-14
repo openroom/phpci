@@ -8,8 +8,6 @@ cache:
 
 before_script:
 # Install git, the php image doesn't have installed
-- apt-cache policy lsb-release
-- lsb_release -a
 - apt-get update -yqq
 - apt-get install git -yqq
 
