@@ -1,5 +1,5 @@
 # Select image from https://hub.docker.com/_/php/
-image: php:5.6
+image: php:7.1
 
 # Select what we should cache
 cache:
@@ -8,6 +8,7 @@ cache:
 
 before_script:
 # Install git, the php image doesn't have installed
+- apt-cache policy lsb-release
 - lsb_release -a
 - apt-get update -yqq
 - apt-get install git -yqq
@@ -29,16 +30,13 @@ variables:
   # Configure mysql service (https://hub.docker.com/_/mysql/)
   MYSQL_DATABASE: hello_world_test
   MYSQL_ROOT_PASSWORD: mysql
-
-# We test PHP5.6 (the default) with MySQL
-test:mysql:
-  script:
-  - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
-  - vendor/bin/phpunit --configuration phpunit_pgsql.xml --coverage-text
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: hello_world_test
 
 # We test PHP7 with MySQL, but we allow it to fail
 test:php7:mysql:
-  image: php:7
+  image: php:7.1
   script:
   - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
   - vendor/bin/phpunit --configuration phpunit_pgsql.xml --coverage-text
