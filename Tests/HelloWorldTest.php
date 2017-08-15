@@ -197,7 +197,7 @@ VALUES ('445', 0, 8, 1, 'Room 445'), ('446', 1, 8, 1, 'Room 446'), ('503', 2, 8,
   start_time TIMESTAMP NOT NULL,
   end_time   TIMESTAMP NOT NULL
 );";
-    $populateTable = "INSERT INTO {$tableName} VALUES 
+    $populateTable = "INSERT INTO {$tableName} (id, room_id, from_range, to_range, start_time, end_time) VALUES 
   (1, 1, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (2, 2, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (3, 3, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
