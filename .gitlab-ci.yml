@@ -21,6 +21,7 @@ before_script:
 
 # Install all project dependencies
 - php composer.phar install
+- php composer.phar update
 
 services:
 - mysql
