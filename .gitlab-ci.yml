@@ -11,6 +11,7 @@ before_script:
 - apt-get update -yqq
 - apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo pdo_pgsql
 - apt-get install git -yqq
+- apt-get install php-xdebug -yqq
 
 # Install mysql driver
 - docker-php-ext-install pdo_mysql
