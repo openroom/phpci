@@ -65,9 +65,9 @@ class HelloWorldTest extends PHPUnit_Framework_TestCase
         $tableName = 'duck';
         $createTable = "create table {$tableName} (id SERIAL PRIMARY KEY,username TEXT NOT NULL UNIQUE)";
         $populateTable = "INSERT INTO {$tableName} (username) VALUES ('admin')";
-        dropTable($db, $tableName);
-        executeStatement($db, $createTable);
-        executeStatement($db, $populateTable);
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
     }
 
     function dropAndCreateUsers(\PDO $db)
@@ -90,10 +90,10 @@ class HelloWorldTest extends PHPUnit_Framework_TestCase
 VALUES ('admin', '{$hashedPassword}', 'hikingfan@gmail.com', TRUE, TRUE);";
         $populateTableReporter = "INSERT INTO {$tableName}  (username, password, email, is_active, is_reporter) 
 VALUES ('reporter', '{$hashedPassword}', 'hikingfan+reporter@gmail.com', TRUE, TRUE);";
-        dropTable($db, $tableName);
-        executeStatement($db, $createTable);
-        executeStatement($db, $populateTableAdmin);
-        executeStatement($db, $populateTableReporter);
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTableAdmin);
+        $this->executeStatement($db, $populateTableReporter);
     }
 
     function dropAndCreateSettings(\PDO $db)
@@ -123,9 +123,9 @@ VALUES ('reporter', '{$hashedPassword}', 'hikingfan+reporter@gmail.com', TRUE, T
                'hours. The room will then be reassigned to you provided there are no other users awaiting use of ' ||
                'the room.'),
 ('time_format', 'g:i a');";
-        dropTable($db, $tableName);
-        executeStatement($db, $createTable);
-        executeStatement($db, $populateTable);
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
     }
 
     function dropAndCreateGroups(\PDO $db)
@@ -135,11 +135,11 @@ VALUES ('reporter', '{$hashedPassword}', 'hikingfan+reporter@gmail.com', TRUE, T
         $populateTable = "INSERT INTO {$tableName} (name) VALUES ('apple')";
         $populateTable1 = "INSERT INTO {$tableName} (name) VALUES ('ball')";
         $populateTable2 = "INSERT INTO {$tableName} (name) VALUES ('cat')";
-        dropTable($db, $tableName);
-        executeStatement($db, $createTable);
-        executeStatement($db, $populateTable);
-        executeStatement($db, $populateTable1);
-        executeStatement($db, $populateTable2);
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
+        $this->executeStatement($db, $populateTable1);
+        $this->executeStatement($db, $populateTable2);
     }
 
     function dropAndCreateRooms(\PDO $db)
@@ -155,9 +155,9 @@ VALUES ('reporter', '{$hashedPassword}', 'hikingfan+reporter@gmail.com', TRUE, T
 );";
         $populateTable = "INSERT INTO {$tableName} (name, position, capacity, groupid, description)
 VALUES ('방 101', 1, 8, 9, '이것은 시험이다.')";
-        dropTable($db, $tableName);
-        executeStatement($db, $createTable);
-        executeStatement($db, $populateTable);
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
     }
 
     function dropAndCreateReservations(\PDO $db)
@@ -175,9 +175,9 @@ VALUES ('방 101', 1, 8, 9, '이것은 시험이다.')";
 );";
         $populateTable = "INSERT INTO {$tableName} (start_time, end_time, room_id, user_id) 
 VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
-        dropTable($db, $tableName);
-        executeStatement($db, $createTable);
-        executeStatement($db, $populateTable);
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
     }
 
     function dropAndCreateHours(\PDO $db)
@@ -194,9 +194,9 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
 VALUES ('445', 0, 8, 1, 'Room 445'), ('446', 1, 8, 1, 'Room 446'), ('503', 2, 8, 1, 'Room 503'),
   ('541', 3, 8, 1, 'Room 541'), ('1', 0, 8, 2, 'MediaScape Room 1'), ('2', 1, 8, 2, 'MediaScape Room 2'),
   ('3', 2, 8, 2, 'MediaScape Room 3');";
-        dropTable($db, $tableName);
-        executeStatement($db, $createTable);
-        executeStatement($db, $populateTable);
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
     }
 
     function dropAndCreateSpecialHours(\PDO $db)
@@ -218,9 +218,9 @@ VALUES ('445', 0, 8, 1, 'Room 445'), ('446', 1, 8, 1, 'Room 446'), ('503', 2, 8,
   (5, 5, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (6, 6, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (7, 7, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000');";
-        dropTable($db, $tableName);
-        executeStatement($db, $createTable);
-        executeStatement($db, $populateTable);
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
     }
 
     function dropAndCreateOptionalFields(\PDO $db)
@@ -257,16 +257,16 @@ VALUES ('445', 0, 8, 1, 'Room 445'), ('446', 1, 8, 1, 'Room 446'), ('503', 2, 8,
   }', 1,
    '\"¿Cuál es su afiliación en el campus ?\"', FALSE, TRUE
   );";
-        dropTable($db, $tableName);
-        executeStatement($db, $createTable);
-        executeStatement($db, $populateTable);
-        executeStatement($db, $populateTable2);
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
+        $this->executeStatement($db, $populateTable2);
     }
 
     function dropTable(\PDO $db, string $tableName)
     {
         $statement = "DROP TABLE IF EXISTS {$tableName} CASCADE";
-        executeStatement($db, $statement);
+        $this->executeStatement($db, $statement);
     }
 
     function executeStatement(\PDO $db, string $statement)
