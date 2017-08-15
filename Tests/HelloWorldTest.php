@@ -49,15 +49,15 @@ class HelloWorldTest extends PHPUnit_Framework_TestCase
 
     function doIt(\PDO $db)
     {
-        dropAndCreateDuck($db);
-        dropAndCreateUsers($db);
-        dropAndCreateSettings($db);
-        dropAndCreateGroups($db);
-        dropAndCreateRooms($db);
-        dropAndCreateReservations($db);
-        dropAndCreateHours($db);
-        dropAndCreateSpecialHours($db);
-        dropAndCreateOptionalFields($db);
+        $this->dropAndCreateDuck($db);
+        $this->dropAndCreateUsers($db);
+        $this->dropAndCreateSettings($db);
+        $this->dropAndCreateGroups($db);
+        $this->dropAndCreateRooms($db);
+        $this->dropAndCreateReservations($db);
+        $this->dropAndCreateHours($db);
+        $this->dropAndCreateSpecialHours($db);
+        $this->dropAndCreateOptionalFields($db);
     }
 
     function dropAndCreateDuck(\PDO $db)
