@@ -178,7 +178,7 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
   start_time  TIMESTAMP NOT NULL,
   end_time    TIMESTAMP NOT NULL
 );";
-    $populateTable = "INSERT INTO {$tableName} (name, position, capacity, groupid, description)
+    $populateTable = "INSERT INTO {$tableName} (id, room_id, day_of_week, start_time, end_time)
 VALUES ('445', 0, 8, 1, 'Room 445'), ('446', 1, 8, 1, 'Room 446'), ('503', 2, 8, 1, 'Room 503'),
   ('541', 3, 8, 1, 'Room 541'), ('1', 0, 8, 2, 'MediaScape Room 1'), ('2', 1, 8, 2, 'MediaScape Room 2'),
   ('3', 2, 8, 2, 'MediaScape Room 3');";
