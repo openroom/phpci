@@ -154,7 +154,7 @@ VALUES ('reporter', '{$hashedPassword}', 'hikingfan+reporter@gmail.com', TRUE, T
   description TEXT
 );";
         $populateTable = "INSERT INTO {$tableName} (name, position, capacity, groupid, description)
-VALUES ('방 101', 1, 8, 9, '이것은 시험이다.')";
+VALUES ('방 101', 1, 8, 1, '이것은 시험이다.')";
         $this->dropTable($db, $tableName);
         $this->executeStatement($db, $createTable);
         $this->executeStatement($db, $populateTable);
