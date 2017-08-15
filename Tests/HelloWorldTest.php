@@ -57,7 +57,7 @@ class HelloWorldTest extends PHPUnit_Framework_TestCase {
 
   function dropAndCreateDuck(\PDO $db) {
     $tableName = 'duck';
-    $createTable = "create table {$tableName} (id SERIAL PRIMARY KEY,username TEXT NOT NULL UNIQUE)";
+    $createTable = "create table {$tableName} (id SERIAL PRIMARY KEY,username varchar(50) NOT NULL UNIQUE)";
     $populateTable = "INSERT INTO {$tableName} (username) VALUES ('admin')";
     $this->dropTable($db, $tableName);
     $this->executeStatement($db, $createTable);
@@ -69,7 +69,7 @@ class HelloWorldTest extends PHPUnit_Framework_TestCase {
     $hashedPassword = \model\User::hashPassword('hunter2');
     $createTable = "CREATE TABLE {$tableName}  (
   id               SERIAL PRIMARY KEY,
-  username         VARCHAR(50)                 NOT NULL UNIQUE,
+  username         TEXT                        NOT NULL UNIQUE,
   display_name     TEXT,
   password         TEXT                        NOT NULL,
   email            TEXT                        NOT NULL,
