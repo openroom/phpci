@@ -13,7 +13,6 @@ class HelloWorldTest extends PHPUnit_Framework_TestCase
         $this->pdo = new PDO($GLOBALS['db_dsn'], $GLOBALS['db_username'], $GLOBALS['db_password']);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->pdo->query("CREATE TABLE hello (what VARCHAR(50) NOT NULL)");
-        $this->doIt($this->pdo);
     }
 
     public function tearDown()
