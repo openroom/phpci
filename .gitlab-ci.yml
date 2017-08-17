@@ -38,16 +38,14 @@ variables:
   POSTGRES_PASSWORD: postgres
   POSTGRES_DB: hello_world_test
 
-# We test PHP7 with MySQL, but we allow it to fail
 test:php7:mysql:
   image: php:latest
   script:
   - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
   allow_failure: true
 
-# We test PHP7 with MySQL, but we allow it to fail
-test:php7rc:mysql:
-  image: php:rc
+test:php70:mysql:
+  image: php:7.0
   script:
   - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
   allow_failure: true
@@ -58,8 +56,8 @@ test:php7:postgresql:
   - vendor/bin/phpunit --configuration phpunit_pgsql.xml --coverage-text
   allow_failure: true
 
-test:php7rc:postgresql:
-  image: php:rc
+test:php70:postgresql:
+  image: php:7.0
   script:
   - vendor/bin/phpunit --configuration phpunit_pgsql.xml --coverage-text
   allow_failure: true
