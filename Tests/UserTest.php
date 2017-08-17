@@ -34,4 +34,22 @@ class UserTest extends PHPUnit_Framework_TestCase
         }
         $this->pdo->query("DROP TABLE users");
     }
+
+    public function testAddAdminUser()
+    {
+        $tableName = 'users';
+        $hashedPassword = \model\User::hashPassword('hunter2');
+        $admin = \model\User::create()
+            ->setUsername("hunter")
+            ->setPassword($hashedPassword)
+            ->setDisplayName("Gunter Adams")
+            ->setEmail("hikingfan@gmail.com")
+            ->setIsActive(true)
+            ->setIsBanned(false)
+            ->setIsReporter(true)
+            ->setIsAdministrator(true);
+        \model\User::addUser($this->pdo, $admin);
+        $adminEmail = \model\User::fetchByUsername($this->pdo,"hunter")->getEmail();
+        $this->assertEquals('hikingfan@gmail.com', $adminEmail);
+    }
 }
