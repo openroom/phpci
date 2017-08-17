@@ -12,6 +12,7 @@ class UserTest extends PHPUnit_Framework_TestCase
     {
         $this->pdo = new PDO($GLOBALS['db_dsn'], $GLOBALS['db_username'], $GLOBALS['db_password']);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->pdo->query("DROP TABLE IF EXISTS users CASCADE");
         $createTable = "CREATE TABLE users  (
   id               SERIAL PRIMARY KEY,
   username         TEXT                        NOT NULL UNIQUE,
@@ -49,7 +50,7 @@ class UserTest extends PHPUnit_Framework_TestCase
             ->setIsReporter(true)
             ->setIsAdministrator(true);
         \model\User::addUser($this->pdo, $admin);
-        $adminEmail = \model\User::fetchByUsername($this->pdo,"hunter")->getEmail();
+        $adminEmail = \model\User::fetchByUsername($this->pdo, "hunter")->getEmail();
         $this->assertEquals('hikingfan@gmail.com', $adminEmail);
     }
 }
