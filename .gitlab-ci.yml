@@ -54,7 +54,6 @@ test:php7:postgresql:
   image: php:latest
   script:
   - vendor/bin/phpunit --configuration phpunit_pgsql.xml --coverage-text
-  allow_failure: true
 
 test:php70:postgresql:
   image: php:7.0
