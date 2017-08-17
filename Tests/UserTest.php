@@ -1,6 +1,6 @@
 <?php
 
-class UserTest extends PHPUnit_Framework_TestCase
+class UserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -70,4 +70,10 @@ class UserTest extends PHPUnit_Framework_TestCase
         $adminEmail = \model\User::fetchByUsername($this->pdo, "hunter")->getEmail();
         $this->assertEquals('hikingfan@gmail.com', $adminEmail);
     }
+
+  public function testFetchAll() {
+    $noUsers = \model\User::fetchAll($this->pdo);
+    echo $noUsers;
+    $this->assertNull($noUsers);
+  }
 }
