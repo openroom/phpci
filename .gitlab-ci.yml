@@ -45,8 +45,21 @@ test:php7:mysql:
   - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
   allow_failure: true
 
+# We test PHP7 with MySQL, but we allow it to fail
+test:php7rc:mysql:
+  image: php:rc
+  script:
+  - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
+  allow_failure: true
+
 test:php7:postgresql:
   image: php:latest
+  script:
+  - vendor/bin/phpunit --configuration phpunit_pgsql.xml --coverage-text
+  allow_failure: true
+
+test:php7rc:postgresql:
+  image: php:rc
   script:
   - vendor/bin/phpunit --configuration phpunit_pgsql.xml --coverage-text
   allow_failure: true
