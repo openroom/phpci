@@ -47,8 +47,25 @@ class UserTest extends PHPUnit_Framework_TestCase
             ->setEmail("hikingfan@gmail.com")
             ->setIsActive(true)
             ->setIsBanned(false)
-            ->setIsReporter(true)
+            ->setIsReporter(false)
             ->setIsAdministrator(true);
+        \model\User::addUser($this->pdo, $admin);
+        $adminEmail = \model\User::fetchByUsername($this->pdo, "hunter")->getEmail();
+        $this->assertEquals('hikingfan@gmail.com', $adminEmail);
+    }
+    public function testAddReporterUser()
+    {
+        $tableName = 'users';
+        $hashedPassword = \model\User::hashPassword('hunter2');
+        $admin = \model\User::create()
+            ->setUsername("hunter")
+            ->setPassword($hashedPassword)
+            ->setDisplayName("Gunter Adams")
+            ->setEmail("hikingfan@gmail.com")
+            ->setIsActive(true)
+            ->setIsBanned(false)
+            ->setIsReporter(true)
+            ->setIsAdministrator(false);
         \model\User::addUser($this->pdo, $admin);
         $adminEmail = \model\User::fetchByUsername($this->pdo, "hunter")->getEmail();
         $this->assertEquals('hikingfan@gmail.com', $adminEmail);
