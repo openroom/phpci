@@ -20,4 +20,18 @@ class UserSQLRepository implements \model\UserRepositoryReadInterface, \model\Us
       ->setIsReporter($user['is_reporter'])
       ->setIsBanned($user['is_banned']);
   }
+
+  public static function saveUser(\PDO $db, \model\User $user) {
+    $username = $user->getUsername();
+    $displayName = $user->getDisplayName();
+    $password = $user->getPassword();
+    $email = $user->getEmail();
+    $req = $db->prepare('INSERT INTO users (username, display_name, password, email) VALUES (:username, :display_name, :password, :email)');
+    $req->bindParam(':username', $username, \PDO::PARAM_STR, 255);
+    $req->bindParam(':display_name', $displayName, \PDO::PARAM_STR, 255);
+    $req->bindParam(':password', $password, \PDO::PARAM_STR, 255);
+    $req->bindParam(':email', $email, \PDO::PARAM_STR, 255);
+    $req->execute();
+    $req = NULL;
+  }
 }

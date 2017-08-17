@@ -46,32 +46,8 @@ class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase {
       ->setIsReporter(FALSE)
       ->setIsAdministrator(TRUE);
     \model\User::addUser($this->pdo, $admin);
-    $adminEmail = \model\User::fetchByUsername($this->pdo, "hunter")
+    $adminEmail = \model\UserSQLRepository::fetchByUsername($this->pdo, "hunter")
       ->getEmail();
     $this->assertEquals('hikingfan@gmail.com', $adminEmail);
-  }
-
-  public function testAddReporterUser() {
-    $tableName = 'users';
-    $hashedPassword = \model\User::hashPassword('hunter2');
-    $admin = \model\User::create()
-      ->setUsername("hunter")
-      ->setPassword($hashedPassword)
-      ->setDisplayName("Gunter Adams")
-      ->setEmail("hikingfan@gmail.com")
-      ->setIsActive(TRUE)
-      ->setIsBanned(FALSE)
-      ->setIsReporter(TRUE)
-      ->setIsAdministrator(FALSE);
-    \model\User::addUser($this->pdo, $admin);
-    $adminEmail = \model\User::fetchByUsername($this->pdo, "hunter")
-      ->getEmail();
-    $this->assertEquals('hikingfan@gmail.com', $adminEmail);
-  }
-
-  public function testFetchByUsername() {
-    $noUsers = \model\UserSQLRepository::fetchByUsername($this->pdo, "hunter");
-    echo $noUsers;
-    $this->assertEmpty($noUsers, 'array is empty');
   }
 }
