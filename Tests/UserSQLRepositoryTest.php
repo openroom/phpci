@@ -1,6 +1,6 @@
 <?php
 
-class UserTest extends \PHPUnit_Framework_TestCase {
+class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @var PDO
