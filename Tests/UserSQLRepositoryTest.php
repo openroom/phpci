@@ -45,7 +45,7 @@ class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase {
       ->setIsBanned(FALSE)
       ->setIsReporter(FALSE)
       ->setIsAdministrator(TRUE);
-    \model\User::addUser($this->pdo, $admin);
+    \model\UserSQLRepository::saveUser($this->pdo, $admin);
     $adminEmail = \model\UserSQLRepository::fetchByUsername($this->pdo, "hunter")
       ->getEmail();
     $this->assertEquals('hikingfan@gmail.com', $adminEmail);
