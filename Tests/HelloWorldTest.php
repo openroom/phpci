@@ -48,7 +48,7 @@ class HelloWorldTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Bar', $helloWorld->what());
     }
 
-    function dropAndCreateDuck()
+    public function testDropAndCreateDuck()
     {
         $db = $this->pdo;
         $tableName = 'duck';
@@ -59,7 +59,7 @@ class HelloWorldTest extends PHPUnit_Framework_TestCase
         $this->executeStatement($db, $populateTable);
     }
 
-    function dropAndCreateUsers()
+    public function testDropAndCreateUsers()
     {
         $db = $this->pdo;
         $tableName = 'users';
@@ -86,7 +86,7 @@ VALUES ('reporter', '{$hashedPassword}', 'hikingfan+reporter@gmail.com', TRUE, T
         $this->executeStatement($db, $populateTableReporter);
     }
 
-    function dropAndCreateSettings()
+    public function testDropAndCreateSettings()
     {
         $db = $this->pdo;
         $tableName = 'settings';
@@ -119,7 +119,7 @@ VALUES ('reporter', '{$hashedPassword}', 'hikingfan+reporter@gmail.com', TRUE, T
         $this->executeStatement($db, $populateTable);
     }
 
-    function dropAndCreateGroups()
+    public function testDropAndCreateGroups()
     {
         $db = $this->pdo;
         $tableName = 'groups';
@@ -134,7 +134,7 @@ VALUES ('reporter', '{$hashedPassword}', 'hikingfan+reporter@gmail.com', TRUE, T
         $this->executeStatement($db, $populateTable2);
     }
 
-    function dropAndCreateRooms()
+    public function testDropAndCreateRooms()
     {
         $db = $this->pdo;
         $tableName = 'rooms';
@@ -153,7 +153,7 @@ VALUES ('방 101', 1, 8, 1, '이것은 시험이다.')";
         $this->executeStatement($db, $populateTable);
     }
 
-    function dropAndCreateReservations()
+    public function testDropAndCreateReservations()
     {
         $db = $this->pdo;
         $tableName = 'reservations';
@@ -174,7 +174,7 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
         $this->executeStatement($db, $populateTable);
     }
 
-    function dropAndCreateHours()
+    public function testDropAndCreateHours()
     {
         $db = $this->pdo;
         $tableName = 'hours';
@@ -198,7 +198,7 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
         $this->executeStatement($db, $populateTable);
     }
 
-    function dropAndCreateSpecialHours()
+    public function testDropAndCreateSpecialHours()
     {
         $db = $this->pdo;
         $tableName = 'specialhours';
@@ -223,7 +223,7 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
         $this->executeStatement($db, $populateTable);
     }
 
-    function dropAndCreateOptionalFields()
+    public function testDropAndCreateOptionalFields()
     {
         $db = $this->pdo;
         $tableName = 'optionalfields';
@@ -264,13 +264,13 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
         $this->executeStatement($db, $populateTable2);
     }
 
-    function dropTable(\PDO $db, string $tableName)
+    public function testDropTable(\PDO $db, string $tableName)
     {
         $statement = "DROP TABLE IF EXISTS {$tableName} CASCADE";
         $this->executeStatement($db, $statement);
     }
 
-    function executeStatement(\PDO $db, string $statement)
+    public function testexecuteStatement(\PDO $db, string $statement)
     {
         try {
             $req = $db->prepare("{$statement}");
