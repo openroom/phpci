@@ -1,73 +1,71 @@
 <?php
 
-class HelloWorldTest extends PHPUnit_Framework_TestCase {
+class HelloWorldTest extends PHPUnit_Framework_TestCase
+{
 
-  /**
-   * @var PDO
-   */
-  private $pdo;
+    /**
+     * @var PDO
+     */
+    private $pdo;
 
-  public function setUp() {
-    $this->pdo = new PDO($GLOBALS['db_dsn'], $GLOBALS['db_username'], $GLOBALS['db_password']);
-    $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $this->pdo->query("CREATE TABLE hello (what VARCHAR(50) NOT NULL)");
-    $this->doIt($this->pdo);
-  }
-
-  public function tearDown() {
-    if (!$this->pdo) {
-      return;
+    public function setUp()
+    {
+        $this->pdo = new PDO($GLOBALS['db_dsn'], $GLOBALS['db_username'], $GLOBALS['db_password']);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->pdo->query("CREATE TABLE hello (what VARCHAR(50) NOT NULL)");
+        $this->doIt($this->pdo);
     }
-    $this->pdo->query("DROP TABLE hello");
-  }
 
-  public function testHelloWorld() {
-    $helloWorld = new HelloWorld($this->pdo);
+    public function tearDown()
+    {
+        if (!$this->pdo) {
+            return;
+        }
+        $this->pdo->query("DROP TABLE hello");
+    }
 
-    $this->assertEquals('Hello World', $helloWorld->hello());
-  }
+    public function testHelloWorld()
+    {
+        $helloWorld = new HelloWorld($this->pdo);
 
-  public function testHello() {
-    $helloWorld = new HelloWorld($this->pdo);
+        $this->assertEquals('Hello World', $helloWorld->hello());
+    }
 
-    $this->assertEquals('Hello Bar', $helloWorld->hello('Bar'));
-  }
+    public function testHello()
+    {
+        $helloWorld = new HelloWorld($this->pdo);
 
-  public function testWhat() {
-    $helloWorld = new HelloWorld($this->pdo);
+        $this->assertEquals('Hello Bar', $helloWorld->hello('Bar'));
+    }
 
-    $this->assertFalse($helloWorld->what());
+    public function testWhat()
+    {
+        $helloWorld = new HelloWorld($this->pdo);
 
-    $helloWorld->hello('Bar');
+        $this->assertFalse($helloWorld->what());
 
-    $this->assertEquals('Bar', $helloWorld->what());
-  }
+        $helloWorld->hello('Bar');
 
-  function doIt(\PDO $db) {
-    $this->dropAndCreateDuck($db);
-    $this->dropAndCreateUsers($db);
-    $this->dropAndCreateSettings($db);
-    $this->dropAndCreateGroups($db);
-    $this->dropAndCreateRooms($db);
-    $this->dropAndCreateReservations($db);
-    $this->dropAndCreateHours($db);
-    $this->dropAndCreateSpecialHours($db);
-    $this->dropAndCreateOptionalFields($db);
-  }
+        $this->assertEquals('Bar', $helloWorld->what());
+    }
 
-  function dropAndCreateDuck(\PDO $db) {
-    $tableName = 'duck';
-    $createTable = "create table {$tableName} (id SERIAL PRIMARY KEY,username varchar(50) NOT NULL UNIQUE)";
-    $populateTable = "INSERT INTO {$tableName} (username) VALUES ('admin')";
-    $this->dropTable($db, $tableName);
-    $this->executeStatement($db, $createTable);
-    $this->executeStatement($db, $populateTable);
-  }
+    function dropAndCreateDuck()
+    {
+        $db = $this->pdo;
+        $tableName = 'duck';
+        $createTable = "create table {$tableName} (id SERIAL PRIMARY KEY,username varchar(50) NOT NULL UNIQUE)";
+        $populateTable = "INSERT INTO {$tableName} (username) VALUES ('admin')";
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
+    }
 
-  function dropAndCreateUsers(\PDO $db) {
-    $tableName = 'users';
-    $hashedPassword = \model\User::hashPassword('hunter2');
-    $createTable = "CREATE TABLE {$tableName}  (
+    function dropAndCreateUsers()
+    {
+        $db = $this->pdo;
+        $tableName = 'users';
+        $hashedPassword = \model\User::hashPassword('hunter2');
+        $createTable = "CREATE TABLE {$tableName}  (
   id               SERIAL PRIMARY KEY,
   username         TEXT                        NOT NULL UNIQUE,
   display_name     TEXT,
@@ -79,24 +77,26 @@ class HelloWorldTest extends PHPUnit_Framework_TestCase {
   is_reporter      BOOLEAN                     NOT NULL DEFAULT FALSE,
   is_banned        BOOLEAN                     NOT NULL DEFAULT FALSE
 );";
-    $populateTableAdmin = "INSERT INTO {$tableName}  (username, password, email, is_active, is_administrator) 
+        $populateTableAdmin = "INSERT INTO {$tableName}  (username, password, email, is_active, is_administrator) 
 VALUES ('admin', '{$hashedPassword}', 'hikingfan@gmail.com', TRUE, TRUE);";
-    $populateTableReporter = "INSERT INTO {$tableName}  (username, password, email, is_active, is_reporter) 
+        $populateTableReporter = "INSERT INTO {$tableName}  (username, password, email, is_active, is_reporter) 
 VALUES ('reporter', '{$hashedPassword}', 'hikingfan+reporter@gmail.com', TRUE, TRUE);";
-    $this->dropTable($db, $tableName);
-    $this->executeStatement($db, $createTable);
-    $this->executeStatement($db, $populateTableAdmin);
-    $this->executeStatement($db, $populateTableReporter);
-  }
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTableAdmin);
+        $this->executeStatement($db, $populateTableReporter);
+    }
 
-  function dropAndCreateSettings(\PDO $db) {
-    $tableName = 'settings';
-    $createTable = "CREATE TABLE {$tableName}  (
+    function dropAndCreateSettings()
+    {
+        $db = $this->pdo;
+        $tableName = 'settings';
+        $createTable = "CREATE TABLE {$tableName}  (
   id    SERIAL PRIMARY KEY,
   name  TEXT UNIQUE,
   value TEXT
 );";
-    $populateTable = "INSERT INTO {$tableName}  (name, value) VALUES 
+        $populateTable = "INSERT INTO {$tableName}  (name, value) VALUES 
 ('login_method', 'normal'),
 ('systemid', '80zhh73n5'),
 ('theme', 'default'),
@@ -115,27 +115,31 @@ VALUES ('reporter', '{$hashedPassword}', 'hikingfan+reporter@gmail.com', TRUE, T
                'hours. The room will then be reassigned to you provided there are no other users awaiting use of ' ||
                'the room.'),
 ('time_format', 'g:i a');";
-    $this->dropTable($db, $tableName);
-    $this->executeStatement($db, $createTable);
-    $this->executeStatement($db, $populateTable);
-  }
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
+    }
 
-  function dropAndCreateGroups(\PDO $db) {
-    $tableName = 'groups';
-    $createTable = "create table {$tableName} (id SERIAL PRIMARY KEY, name TEXT NOT NULL)";
-    $populateTable = "INSERT INTO {$tableName} (name) VALUES ('apple')";
-    $populateTable1 = "INSERT INTO {$tableName} (name) VALUES ('ball')";
-    $populateTable2 = "INSERT INTO {$tableName} (name) VALUES ('cat')";
-    $this->dropTable($db, $tableName);
-    $this->executeStatement($db, $createTable);
-    $this->executeStatement($db, $populateTable);
-    $this->executeStatement($db, $populateTable1);
-    $this->executeStatement($db, $populateTable2);
-  }
+    function dropAndCreateGroups()
+    {
+        $db = $this->pdo;
+        $tableName = 'groups';
+        $createTable = "create table {$tableName} (id SERIAL PRIMARY KEY, name TEXT NOT NULL)";
+        $populateTable = "INSERT INTO {$tableName} (name) VALUES ('apple')";
+        $populateTable1 = "INSERT INTO {$tableName} (name) VALUES ('ball')";
+        $populateTable2 = "INSERT INTO {$tableName} (name) VALUES ('cat')";
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
+        $this->executeStatement($db, $populateTable1);
+        $this->executeStatement($db, $populateTable2);
+    }
 
-  function dropAndCreateRooms(\PDO $db) {
-    $tableName = 'rooms';
-    $createTable = "create table {$tableName} (
+    function dropAndCreateRooms()
+    {
+        $db = $this->pdo;
+        $tableName = 'rooms';
+        $createTable = "create table {$tableName} (
   id          SERIAL PRIMARY KEY,
   name        TEXT,
   position    INTEGER,
@@ -143,16 +147,18 @@ VALUES ('reporter', '{$hashedPassword}', 'hikingfan+reporter@gmail.com', TRUE, T
   groupid     INTEGER REFERENCES Groups (id),
   description TEXT
 );";
-    $populateTable = "INSERT INTO {$tableName} (name, position, capacity, groupid, description)
+        $populateTable = "INSERT INTO {$tableName} (name, position, capacity, groupid, description)
 VALUES ('방 101', 1, 8, 1, '이것은 시험이다.')";
-    $this->dropTable($db, $tableName);
-    $this->executeStatement($db, $createTable);
-    $this->executeStatement($db, $populateTable);
-  }
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
+    }
 
-  function dropAndCreateReservations(\PDO $db) {
-    $tableName = 'reservations';
-    $createTable = "create table {$tableName} (
+    function dropAndCreateReservations()
+    {
+        $db = $this->pdo;
+        $tableName = 'reservations';
+        $createTable = "create table {$tableName} (
   id                   SERIAL PRIMARY KEY,
   start_time           TIMESTAMP NOT NULL,
   end_time             TIMESTAMP NOT NULL,
@@ -162,23 +168,25 @@ VALUES ('방 101', 1, 8, 1, '이것은 시험이다.')";
   time_of_request      TIMESTAMP NOT NULL DEFAULT (now()),
   time_of_cancellation TIMESTAMP          DEFAULT NULL
 );";
-    $populateTable = "INSERT INTO {$tableName} (start_time, end_time, room_id, user_id) 
+        $populateTable = "INSERT INTO {$tableName} (start_time, end_time, room_id, user_id) 
 VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
-    $this->dropTable($db, $tableName);
-    $this->executeStatement($db, $createTable);
-    $this->executeStatement($db, $populateTable);
-  }
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
+    }
 
-  function dropAndCreateHours(\PDO $db) {
-    $tableName = 'hours';
-    $createTable = "create table {$tableName} (
+    function dropAndCreateHours()
+    {
+        $db = $this->pdo;
+        $tableName = 'hours';
+        $createTable = "create table {$tableName} (
   id          SERIAL PRIMARY KEY,
   room_id     INTEGER   NOT NULL REFERENCES Rooms (id),
   day_of_week SMALLINT  NOT NULL,
   start_time  TIMESTAMP NOT NULL,
   end_time    TIMESTAMP NOT NULL
 );";
-    $populateTable = "INSERT INTO {$tableName} (room_id, day_of_week, start_time, end_time) VALUES 
+        $populateTable = "INSERT INTO {$tableName} (room_id, day_of_week, start_time, end_time) VALUES 
   (1, 1, '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (1, 2, '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (1, 3, '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
@@ -186,14 +194,16 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
   (1, 5, '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (1, 6, '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (1, 7, '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000');";
-    $this->dropTable($db, $tableName);
-    $this->executeStatement($db, $createTable);
-    $this->executeStatement($db, $populateTable);
-  }
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
+    }
 
-  function dropAndCreateSpecialHours(\PDO $db) {
-    $tableName = 'specialhours';
-    $createTable = "create table {$tableName} (
+    function dropAndCreateSpecialHours()
+    {
+        $db = $this->pdo;
+        $tableName = 'specialhours';
+        $createTable = "create table {$tableName} (
   id         SERIAL PRIMARY KEY,
   room_id    INTEGER   NOT NULL REFERENCES Rooms (id),
   from_range TIMESTAMP NOT NULL,
@@ -201,7 +211,7 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
   start_time TIMESTAMP NOT NULL,
   end_time   TIMESTAMP NOT NULL
 );";
-    $populateTable = "INSERT INTO {$tableName} (room_id, from_range, to_range, start_time, end_time) VALUES 
+        $populateTable = "INSERT INTO {$tableName} (room_id, from_range, to_range, start_time, end_time) VALUES 
   (1, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (1, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (1, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
@@ -209,14 +219,16 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
   (1, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (1, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000'),
   (1, '2016-10-10 04:00:00', '2016-10-10 04:00:00', '2017-03-26 11:30:00.000000', '2017-03-26 13:30:00.000000');";
-    $this->dropTable($db, $tableName);
-    $this->executeStatement($db, $createTable);
-    $this->executeStatement($db, $populateTable);
-  }
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
+    }
 
-  function dropAndCreateOptionalFields(\PDO $db) {
-    $tableName = 'optionalfields';
-    $createTable = "create table {$tableName} (
+    function dropAndCreateOptionalFields()
+    {
+        $db = $this->pdo;
+        $tableName = 'optionalfields';
+        $createTable = "create table {$tableName} (
   id          SERIAL PRIMARY KEY,
   name        TEXT    NOT NULL,
   form_name   TEXT    NOT NULL,
@@ -227,7 +239,7 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
   is_private  BOOLEAN NOT NULL DEFAULT FALSE,
   is_required BOOLEAN NOT NULL DEFAULT FALSE
 );";
-    $populateTable = "INSERT INTO {$tableName} 
+        $populateTable = "INSERT INTO {$tableName} 
   (name, form_name, type, choices, position, question, is_private, is_required) 
   VALUES
   ('campus affiliation', 'campus affiliation form', 1, '{
@@ -236,7 +248,7 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
     \"2\": \"Faculty / Staff\"
   }', 1,'What is your Campus Affiliation?', FALSE, TRUE
   );";
-    $populateTable2 = "INSERT INTO {$tableName}
+        $populateTable2 = "INSERT INTO {$tableName}
     (name, form_name, type, choices, position, question, is_private, is_required) VALUES
     ('random question name', 'random question form name', 1, '{
     \"0\": \"蘇步青\",
@@ -247,29 +259,31 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
   }', 1,
    '\"¿Cuál es su afiliación en el campus ?\"', FALSE, TRUE
   );";
-    $this->dropTable($db, $tableName);
-    $this->executeStatement($db, $createTable);
-    $this->executeStatement($db, $populateTable);
-    $this->executeStatement($db, $populateTable2);
-  }
-
-  function dropTable(\PDO $db, string $tableName) {
-    $statement = "DROP TABLE IF EXISTS {$tableName} CASCADE";
-    $this->executeStatement($db, $statement);
-  }
-
-  function executeStatement(\PDO $db, string $statement) {
-    try {
-      $req = $db->prepare("{$statement}");
-      $req->execute();
-      echo "executed statement {$statement}";
-      echo "<br />";
-      echo PHP_EOL;
-      echo PHP_EOL;
-      echo PHP_EOL;
-    } catch (PDOException $e) {
-      echo $e->getMessage();
-      die();
+        $this->dropTable($db, $tableName);
+        $this->executeStatement($db, $createTable);
+        $this->executeStatement($db, $populateTable);
+        $this->executeStatement($db, $populateTable2);
     }
-  }
+
+    function dropTable(\PDO $db, string $tableName)
+    {
+        $statement = "DROP TABLE IF EXISTS {$tableName} CASCADE";
+        $this->executeStatement($db, $statement);
+    }
+
+    function executeStatement(\PDO $db, string $statement)
+    {
+        try {
+            $req = $db->prepare("{$statement}");
+            $req->execute();
+            echo "executed statement {$statement}";
+            echo "<br />";
+            echo PHP_EOL;
+            echo PHP_EOL;
+            echo PHP_EOL;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            die();
+        }
+    }
 }
