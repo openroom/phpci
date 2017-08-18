@@ -48,7 +48,8 @@ class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase {
     $adminEmail = \model\UserSQLRepository::fetchByUsername($this->pdo, "hunter")
       ->getEmail();
     $this->assertEquals('hikingfan@gmail.com', $adminEmail);
-    $adminDisplayName = \model\UserSQLRepository::fetchByEmail($this->pdo, "hikingfan@gmail.com");
+    $adminDisplayName = \model\UserSQLRepository::fetchByEmail($this->pdo, "hikingfan@gmail.com")
+      ->getDisplayName();
     $this->assertEquals("Gunter Adams", $adminDisplayName);
   }
 }
