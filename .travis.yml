@@ -14,7 +14,7 @@ env:
 
 test:
   adapter: postgresql
-  database: travis_ci_test
+  database: hello_world_test
 
 # optionally set up exclutions and allowed failures in the matrix
 matrix:
