@@ -21,6 +21,23 @@ class UserSQLRepository implements \model\UserRepositoryReadInterface, \model\Us
       ->setIsBanned($user['is_banned']);
   }
 
+  public static function fetchByEmail(\PDO $db, string $email): User {
+    $req = $db->prepare('SELECT id, username, display_name, password, email, last_login, is_active, is_administrator, is_reporter, is_banned FROM users WHERE email = :email');
+    $req->execute(['email' => $email]);
+    $user = $req->fetch();
+    return User::create()
+      ->setId($user['id'])
+      ->setUsername($user['username'])
+      ->setDisplayName($user['display_name'])
+      ->setPassword($user['password'])
+      ->setEmail($user['email'])
+      ->setLastLogin($user['last_login'])
+      ->setIsActive($user['is_active'])
+      ->setIsAdministrator($user['is_administrator'])
+      ->setIsReporter($user['is_reporter'])
+      ->setIsBanned($user['is_banned']);
+  }
+
   public static function saveUser(\PDO $db, \model\User $user) {
     $username = $user->getUsername();
     $displayName = $user->getDisplayName();
