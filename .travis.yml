@@ -25,6 +25,10 @@ env:
   - DB=mysql
   - DB=pgsql
 
+test:
+  adapter: postgresql
+  database: travis_ci_test
+
 # optionally set up exclutions and allowed failures in the matrix
 matrix:
   exclude:
@@ -46,4 +50,4 @@ script: phpunit --configuration phpunit_$DB.xml --coverage-text
 
 # configure notifications (email, IRC, campfire etc)
 notifications:
-  irc: "irc.freenode.org#yourfavouriteroomfortravis"
+  irc: "irc.freenode.org##openroom"
