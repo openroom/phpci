@@ -59,6 +59,28 @@ class HelloWorldTest extends PHPUnit_Framework_TestCase
         $this->executeStatement($db, $populateTable);
     }
 
+    public function dropTable(\PDO $db, string $tableName)
+    {
+        $statement = "DROP TABLE IF EXISTS {$tableName} CASCADE";
+        $this->executeStatement($db, $statement);
+    }
+
+    public function ExecuteStatement(\PDO $db, string $statement)
+    {
+        try {
+            $req = $db->prepare("{$statement}");
+            $req->execute();
+            echo "executed statement {$statement}";
+            echo "<br />";
+            echo PHP_EOL;
+            echo PHP_EOL;
+            echo PHP_EOL;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            die();
+        }
+    }
+
     public function testDropAndCreateUsers()
     {
         $db = $this->pdo;
@@ -262,27 +284,5 @@ VALUES ('2017-03-26 11:30:00.000000', '2017-03-26 11:55:00.000000', 1, 1);";
         $this->executeStatement($db, $createTable);
         $this->executeStatement($db, $populateTable);
         $this->executeStatement($db, $populateTable2);
-    }
-
-    public function dropTable(\PDO $db, string $tableName)
-    {
-        $statement = "DROP TABLE IF EXISTS {$tableName} CASCADE";
-        $this->executeStatement($db, $statement);
-    }
-
-    public function ExecuteStatement(\PDO $db, string $statement)
-    {
-        try {
-            $req = $db->prepare("{$statement}");
-            $req->execute();
-            echo "executed statement {$statement}";
-            echo "<br />";
-            echo PHP_EOL;
-            echo PHP_EOL;
-            echo PHP_EOL;
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            die();
-        }
     }
 }

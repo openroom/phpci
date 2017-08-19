@@ -38,15 +38,15 @@ class Setting
         return $this->name;
     }
 
-    public function getValue(): string
-    {
-        return $this->value;
-    }
-
     public function setName($inputName): Setting
     {
         $this->name = $inputName;
         return $this;
+    }
+
+    public function getValue(): string
+    {
+        return $this->value;
     }
 
     public function setValue($inputValue): Setting

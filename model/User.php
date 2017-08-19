@@ -18,6 +18,17 @@ class User
     {
     }
 
+    public static function create()
+    {
+        $instance = new self();
+        return $instance;
+    }
+
+    public static function hashPassword($input)
+    {
+        return password_hash($input, PASSWORD_DEFAULT);
+    }
+
     public function setId($input)
     {
         $this->id = $input;
@@ -57,29 +68,6 @@ class User
         return $this;
     }
 
-    public function setIsActive($input)
-    {
-        $this->isActive = $input;
-        return $this;
-    }
-
-    public static function create()
-    {
-        $instance = new self();
-        return $instance;
-    }
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function setUsername($input)
-    {
-        $this->username = $input;
-        return $this;
-    }
-
     public function getDisplayName()
     {
         return $this->displayName;
@@ -95,6 +83,17 @@ class User
         return $this;
     }
 
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function setUsername($input)
+    {
+        $this->username = $input;
+        return $this;
+    }
+
     public function getPassword(): string
     {
         return $this->password;
@@ -104,11 +103,6 @@ class User
     {
         $this->password = $input;
         return $this;
-    }
-
-    public static function hashPassword($input)
-    {
-        return password_hash($input, PASSWORD_DEFAULT);
     }
 
     public function getEmail()
@@ -148,5 +142,11 @@ class User
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    public function setIsActive($input)
+    {
+        $this->isActive = $input;
+        return $this;
     }
 }

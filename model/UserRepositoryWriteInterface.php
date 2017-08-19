@@ -2,7 +2,8 @@
 
 namespace model;
 
-interface UserRepositoryWriteInterface {
+interface UserRepositoryWriteInterface
+{
 
-  public static function saveUser(\PDO $db, \model\User $user);
+    public static function saveUser(\PDO $db, \model\User $user);
 }
