@@ -25,6 +25,12 @@ class UserLDAPRepository implements UserRepositoryReadInterface
         }
     }
 
+    public static function fetchByEmail(\PDO $db, string $email)
+    {
+        // TODO: Implement fetchByEmail() method.
+        // I don't think I need it but we will see
+    }
+
     public function fetchUserByUsername($db, $username, $ldapBaseDN, $serviceUsername, $servicePassword)
     {
         $newUser = \model\User::create()
