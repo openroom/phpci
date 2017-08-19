@@ -45,10 +45,10 @@ class UserTest extends \PHPUnit_Framework_TestCase {
       ->setIsBanned(FALSE)
       ->setIsReporter(FALSE)
       ->setIsAdministrator(TRUE);
-    \model\User::addUser($this->pdo, $admin);
-    $adminEmail = \model\User::fetchByUsername($this->pdo, "hunter")
-      ->getEmail();
-    $this->assertEquals('hikingfan@gmail.com', $adminEmail);
+    $this->assertTrue($admin->getIsActive);
+    $this->assertFalse($admin->getIsBanned());
+    $this->assertTrue($admin->getIsAdministrator());
+    $this->assertFalse($admin->getIsReporter());
   }
 
   public function testAddReporterUser() {
