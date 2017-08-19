@@ -49,11 +49,24 @@ class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase
             ->setIsReporter(FALSE)
             ->setIsAdministrator(TRUE);
         \model\UserSQLRepository::saveUser($this->pdo, $admin);
-        $adminEmail = \model\UserSQLRepository::fetchByUsername($this->pdo, "hunter")
-            ->getEmail();
-        $this->assertEquals('hikingfan@gmail.com', $adminEmail);
-        $adminDisplayName = \model\UserSQLRepository::fetchByEmail($this->pdo, "hikingfan@gmail.com")
-            ->getDisplayName();
-        $this->assertEquals("Gunter Adams", $adminDisplayName);
+        $adminByUsername = \model\UserSQLRepository::fetchByUsername($this->pdo, "hunter");
+        $adminByEmail = \model\UserSQLRepository::fetchByEmail($this->pdo, "hikingfan@gmail.com");
+        $this->assertEquals("hunter", $adminByUsername->getUsername());
+        $this->assertEquals("hunter", $adminByEmail->getUsername());
+        $this->assertTrue($adminByEmail->verifyPassword($adminByEmail->getPassword()));
+        $this->assertTrue($adminByUsername->verifyPassword($adminByUsername->getPassword()));
+        $this->assertEquals("Gunter Adams", $adminByUsername->getDisplayName());
+        $this->assertEquals("Gunter Adams", $adminByEmail->getDisplayName());
+        $this->assertEquals("hikingfan@gmail.com", $adminByUsername->getEmail());
+        $this->assertEquals("hikingfan@gmail.com", $adminByEmail->getEmail());
+        $this->assertTrue($adminByUsername->getIsActive());
+        $this->assertFalse($adminByEmail->getIsActive());
+        $this->assertTrue($adminByUsername->getIsBanned());
+        $this->assertTrue($adminByEmail->getIsBanned());
+        $this->assertFalse($adminByUsername->getIsReporter());
+        $this->assertFalse($adminByEmail->getIsReporter());
+        $this->assertTrue($adminByUsername->getIsAdministrator());
+        $this->assertTrue($adminByEmail->getIsAdministrator());
+
     }
 }
