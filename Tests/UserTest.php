@@ -33,7 +33,7 @@ class UserTest extends \PHPUnit_Framework_TestCase {
     $this->pdo->query("DROP TABLE users");
   }
 
-  public function testAddAdminUser() {
+  public function testCreateAdminUser() {
     $tableName = 'users';
     $hashedPassword = \model\User::hashPassword('hunter2');
     $admin = \model\User::create()
@@ -41,10 +41,13 @@ class UserTest extends \PHPUnit_Framework_TestCase {
       ->setPassword($hashedPassword)
       ->setDisplayName("Gunter Adams")
       ->setEmail("hikingfan@gmail.com")
-      ->setIsActive(TRUE)
-      ->setIsBanned(FALSE)
-      ->setIsReporter(FALSE)
-      ->setIsAdministrator(TRUE);
+      ->setIsActive(true)
+      ->setIsBanned(false)
+      ->setIsReporter(false)
+      ->setIsAdministrator(true);
+    $this->assertEquals("hunter", $admin->getUsername());
+    $this->assertEquals("Gunter Adams", $admin->getDisplayName());
+    $this->assertEquals("hikingfan@gmail.com", $admin->getEmail());
     $this->assertTrue($admin->getIsActive() );
     $this->assertFalse($admin->getIsBanned());
     $this->assertTrue($admin->getIsAdministrator());
