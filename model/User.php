@@ -141,4 +141,12 @@ class User
             return false;
         }
     }
+
+    /**
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
 }

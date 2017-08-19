@@ -45,33 +45,9 @@ class UserTest extends \PHPUnit_Framework_TestCase {
       ->setIsBanned(FALSE)
       ->setIsReporter(FALSE)
       ->setIsAdministrator(TRUE);
-    $this->assertTrue($admin->getIsActive);
+    $this->assertTrue($admin->getIsActive() );
     $this->assertFalse($admin->getIsBanned());
     $this->assertTrue($admin->getIsAdministrator());
     $this->assertFalse($admin->getIsReporter());
-  }
-
-  public function testAddReporterUser() {
-    $tableName = 'users';
-    $hashedPassword = \model\User::hashPassword('hunter2');
-    $admin = \model\User::create()
-      ->setUsername("hunter")
-      ->setPassword($hashedPassword)
-      ->setDisplayName("Gunter Adams")
-      ->setEmail("hikingfan@gmail.com")
-      ->setIsActive(TRUE)
-      ->setIsBanned(FALSE)
-      ->setIsReporter(TRUE)
-      ->setIsAdministrator(FALSE);
-    \model\User::addUser($this->pdo, $admin);
-    $adminEmail = \model\User::fetchByUsername($this->pdo, "hunter")
-      ->getEmail();
-    $this->assertEquals('hikingfan@gmail.com', $adminEmail);
-  }
-
-  public function testFetchAll() {
-    $noUsers = \model\User::fetchAll($this->pdo);
-    echo $noUsers;
-    $this->assertEmpty($noUsers, 'array is empty');
   }
 }
