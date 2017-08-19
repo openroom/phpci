@@ -27,28 +27,12 @@ before_script:
 - php -v
 
 services:
-- mysql
 - postgres
 
 variables:
-  # Configure mysql service (https://hub.docker.com/_/mysql/)
-  MYSQL_DATABASE: hello_world_test
-  MYSQL_ROOT_PASSWORD: mysql
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   POSTGRES_DB: hello_world_test
-
-test:php7:mysql:
-  image: php:latest
-  script:
-  - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
-  allow_failure: true
-
-test:php70:mysql:
-  image: php:7.0
-  script:
-  - vendor/bin/phpunit --configuration phpunit_mysql.xml --coverage-text
-  allow_failure: true
 
 test:php7:postgresql:
   image: php:latest
