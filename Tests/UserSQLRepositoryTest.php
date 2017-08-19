@@ -53,8 +53,8 @@ class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase
         $adminByEmail = \model\UserSQLRepository::fetchByEmail($this->pdo, "hikingfan@gmail.com");
         $this->assertEquals("hunter", $adminByUsername->getUsername());
         $this->assertEquals("hunter", $adminByEmail->getUsername());
-        $this->assertTrue($adminByEmail->verifyPassword($adminByEmail->getPassword()));
-        $this->assertTrue($adminByUsername->verifyPassword($adminByUsername->getPassword()));
+        $this->assertTrue($adminByUsername->verifyPassword($adminByUsername->getPassword()), 'verify username password');
+        $this->assertTrue($adminByEmail->verifyPassword($adminByEmail->getPassword()), 'verify email password');
         $this->assertEquals("Gunter Adams", $adminByUsername->getDisplayName());
         $this->assertEquals("Gunter Adams", $adminByEmail->getDisplayName());
         $this->assertEquals("hikingfan@gmail.com", $adminByUsername->getEmail());

@@ -2,7 +2,7 @@
 
 namespace model;
 
-class UserSQLRepository implements \model\UserRepositoryReadInterface, \model\UserRepositoryWriteInterface
+class UserSQLRepository implements UserRepositoryReadInterface, UserRepositoryWriteInterface
 {
 
     public static function fetchByUsername(\PDO $db, string $username): User
@@ -41,7 +41,7 @@ class UserSQLRepository implements \model\UserRepositoryReadInterface, \model\Us
             ->setIsBanned($user['is_banned']);
     }
 
-    public static function saveUser(\PDO $db, \model\User $user)
+    public static function saveUser(\PDO $db, User $user)
     {
         $username = $user->getUsername();
         $displayName = $user->getDisplayName();
