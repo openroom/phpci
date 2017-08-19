@@ -56,6 +56,15 @@ class UserSQLRepository implements UserRepositoryReadInterface, UserRepositoryWr
         $req = NULL;
     }
 
+    public static function updateIsAdministrator(\PDO $db, string $username, boolean $isAdministrator)
+    {
+        $req = $db->prepare('update table users set is_administrator = :isAdministrator where username = :username');
+        $req->bindParam(':username', $username, \PDO::PARAM_STR, 255);
+        $req->bindParam(':isAdministrator', $isAdministrator, \PDO::PARAM_BOOL);
+        $req->execute();
+        $req = NULL;
+    }
+
     public static function fetchAllUsers(\PDO $db): array
     {
         $req = $db->prepare('SELECT id, username, display_name, password, email, last_login, is_active, is_administrator, is_reporter, is_banned FROM users');
