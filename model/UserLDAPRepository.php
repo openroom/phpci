@@ -25,27 +25,35 @@ class UserLDAPRepository implements UserRepositoryReadInterface
         }
     }
 
-    public static function fetchByEmail(\PDO $db, string $email)
+    public static function fetchByEmail(\PDO $db, string $email): User
     {
         // TODO: Implement fetchByEmail() method.
         // I don't think I need it but we will see
     }
 
-    public function fetchUserByUsername($db, $username, $ldapBaseDN, $serviceUsername, $servicePassword)
+    public static function fetchByUsername(\PDO $db, string $username): User
     {
-        $newUser = \model\User::create()
+        $ldapBaseDN = Setting::fetchValue($db, "ldapBaseDN");
+        $serviceUsername = Setting::fetchValue($db, "username");
+        $servicePassword = Setting::fetchValue($db, "password");
+        return self::fetchByUsernameLDAP($db, $username, $ldapBaseDN, $serviceUsername, $servicePassword);
+    }
+
+    public static function fetchByUsernameLDAP(\PDO $db, $username, $ldapBaseDN, $serviceUsername, $servicePassword): User
+    {
+        $newUser = User::create()
             ->setUsername($username)
-            ->setEmail($this->ReturnEmailAddress($db, $username, $ldapBaseDN, $serviceUsername, $servicePassword))
-            ->setDisplayname($this->ReturnDisplayName($db, $username, $ldapBaseDN, $serviceUsername, $servicePassword));
+            ->setEmail(self::ReturnEmailAddress($db, $username, $ldapBaseDN, $serviceUsername, $servicePassword))
+            ->setDisplayname(self::ReturnDisplayName($db, $username, $ldapBaseDN, $serviceUsername, $servicePassword));
         return $newUser;
     }
 
-    static function ReturnEmailAddress($db, $inputUsername, $ldapBaseDN, $serviceUsername, $servicePassword)
+    private static function ReturnEmailAddress($db, $inputUsername, $ldapBaseDN, $serviceUsername, $servicePassword)
     {
-        return self::fetchByUsername($db, $inputUsername)->ReturnParameter($inputUsername, "mail", $ldapBaseDN, $serviceUsername, $servicePassword);
+        return self::ReturnParameter($inputUsername, "mail", $ldapBaseDN, $serviceUsername, $servicePassword);
     }
 
-    function ReturnParameter($inputUsername, $inputParameter, $ldapServer, $service_username, $service_password)
+    public static function ReturnParameter($inputUsername, $inputParameter, $ldapServer, $service_username, $service_password)
     {
         $ldap = ldap_connect($ldapServer);
         if ($bind = ldap_bind($ldap, $service_username, $service_password)) {
@@ -53,16 +61,15 @@ class UserLDAPRepository implements UserRepositoryReadInterface
             $data = ldap_get_entries($ldap, $result);
             if (isset($data[0][$inputParameter][0])) {
                 return $data[0][$inputParameter][0];
-
             }
         }
         ldap_close($ldap);
         return "fail";
     }
 
-    public static function ReturnDisplayName($db, $inputUsername, $ldap_baseDN, $service_username, $service_password)
+    public static function ReturnDisplayName($db, $inputUsername, $ldapBaseDN, $serviceUsername, $servicePassword)
     {
-        return self::fetchByUsername($db, $inputUsername)->ReturnParameter($inputUsername, "displayname", $ldap_baseDN, $service_username, $service_password);
+        return self::ReturnParameter($inputUsername, "displayname", $ldapBaseDN, $serviceUsername, $servicePassword);
     }
 
     function IsNotNullOrEmptyString($question)
