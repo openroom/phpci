@@ -79,7 +79,7 @@ class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase
             ->setIsActive(TRUE)
             ->setIsBanned(FALSE)
             ->setIsReporter(FALSE)
-            ->setIsAdministrator(TRUE);
+            ->setIsAdministrator(FALSE);
         \model\UserSQLRepository::saveUser($this->pdo, $admin);
         \model\UserSQLRepository::updateIsAdministrator($this->pdo, $admin->getUsername(), true);
         $hunter1 = \model\UserSQLRepository::fetchByUsername($this->pdo, $admin->getUsername());
