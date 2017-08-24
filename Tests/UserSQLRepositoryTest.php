@@ -87,7 +87,7 @@ class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($hunter1IsAdministrator, 'test user is administrator');
         \model\UserSQLRepository::updateIsAdministrator($this->pdo, $admin->getUsername(), false);
         $hunter2 = \model\UserSQLRepository::fetchByUsername($this->pdo, $admin->getUsername());
-        $hunter2IsAdministrator = $hunter1->getIsAdministrator();
+        $hunter2IsAdministrator = $hunter2->getIsAdministrator();
         $this->assertfalse($hunter2IsAdministrator, 'test user is not administrator');
     }
 }
