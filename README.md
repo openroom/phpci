@@ -11,3 +11,13 @@ Every push will then trigger a new build on GitLab.
 Source
 ------
 This project was taken from: https://github.com/travis-ci-examples/php.
+
+to run unit tests locally, 
+
+* give your postgres user password of postgres
+* create hello_world_test database 
+* make postgres owner ofn the database 
+* go to your project folder 
+* run something like vendor/bin/phpunit --configuration phpunit_pgsqllocal.xml --coverage-text 
+
+enjoy!
