@@ -18,10 +18,7 @@ class Setting
 
     public static function fetchValue(\PDO $db, string $settingName)
     {
-        $req = $db->prepare('SELECT value FROM settings WHERE name = :name');
-        $req->execute(array('name' => $settingName));
-        $setting = $req->fetch();
-        return $setting['value'];
+        return \model\SettingRepository::fetchSetting($db, $settingName)->getValue();
     }
 
     public static function update(\PDO $db, $settingname, $settingvalue)
