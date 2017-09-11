@@ -3,19 +3,9 @@ Example PHP project
 
 [![Build Status](https://travis-ci.org/openroom/phpci.svg?branch=master)](https://travis-ci.org/openroom/phpci)
 
-
-The purpose of this repository is to show how to use GitLab to do
-Continuous Integration with a PHP project. It serves as a companion project for
-<https://docs.gitlab.com/ce/ci/examples/php.html>.
-
-In order to run this project just fork it on GitLab.com.
-Every push will then trigger a new build on GitLab.
-
 Source
 ------
-This project was taken from: https://github.com/travis-ci-examples/php.
-
-to run unit tests locally, 
+To run unit tests locally, 
 
 * give your postgres user password of postgres
 * create hello_world_test database 
