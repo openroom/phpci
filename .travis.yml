@@ -18,7 +18,7 @@ test:
   username: postgres
   password: postgres
 
-# optionally set up exclutions and allowed failures in the matrix
+# optionally set up exclusions and allowed failures in the matrix
 matrix:
   allow_failures:
     - php: 7.0
@@ -36,3 +36,8 @@ script: phpunit --configuration phpunit_$DB.xml --coverage-text
 # configure notifications (email, IRC, campfire etc)
 notifications:
   irc: "irc.freenode.org##openroom"
+  email:
+    recipients:
+      - kushaldeveloper@gmail.com
+    on_success: never # default: change
+    on_failure: always # default: always
