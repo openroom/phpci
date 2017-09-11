@@ -27,6 +27,7 @@ class SettingTest extends PHPUnit\Framework\TestCase
         }
         $this->pdo->query("DROP TABLE settings");
     }
+
     public function testAddSetting()
     {
         $settingName = "OrganizationName";
