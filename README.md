@@ -1,6 +1,9 @@
 Example PHP project
 ===================
 
+[![Build Status](https://travis-ci.org/openroom/phpci.svg?branch=master)](https://travis-ci.org/openroom/phpci)
+
+
 The purpose of this repository is to show how to use GitLab to do
 Continuous Integration with a PHP project. It serves as a companion project for
 <https://docs.gitlab.com/ce/ci/examples/php.html>.
