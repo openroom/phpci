@@ -34,6 +34,6 @@ class SettingTest extends PHPUnit\Framework\TestCase
         $setting = \model\Setting::create()->setName($settingName)->setValue($settingValue);
         \model\SettingRepository::addSetting($this->pdo, $setting);
         $returnedValue = \model\Setting::fetchValue($this->pdo, "OrganizationName");
-        $this->assertEquals("Rosenthal Library at Queens Collegete", $returnedValue);
+        $this->assertEquals("Rosenthal Library at Queens College", $returnedValue);
     }
 }
