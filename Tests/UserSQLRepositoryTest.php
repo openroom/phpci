@@ -1,14 +1,16 @@
 <?php
 
-class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase
+class UserSQLRepositoryTest extends PHPUnit\Framework\TestCase
 {
 
     /**
      * @var PDO
      */
-    private $pdo;
+    private
+    $pdo;
 
-    public function setUp()
+    public
+    function setUp()
     {
         $this->pdo = new PDO($GLOBALS['db_dsn'], $GLOBALS['db_username'], $GLOBALS['db_password']);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -28,7 +30,8 @@ class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->pdo->query($createTable);
     }
 
-    public function tearDown()
+    public
+    function tearDown()
     {
         if (!$this->pdo) {
             return;
@@ -36,7 +39,8 @@ class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->pdo->query("DROP TABLE users");
     }
 
-    public function testAddAdminUser()
+    public
+    function testAddAdminUser()
     {
         $hashedPassword = \model\User::hashPassword('hunter2');
         $admin = \model\User::create()
@@ -68,7 +72,9 @@ class UserSQLRepositoryTest extends \PHPUnit_Framework_TestCase
 //        $this->assertTrue($adminByUsername->getIsAdministrator());
 //        $this->assertTrue($adminByEmail->getIsAdministrator());
     }
-    public function testMakeUserAdministrator()
+
+    public
+    function testMakeUserAdministrator()
     {
         $hashedPassword = \model\User::hashPassword('hunter2');
         $admin = \model\User::create()
