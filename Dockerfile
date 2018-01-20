@@ -1,15 +1,11 @@
-FROM php:latest
-RUN apt-get update -yqq
-RUN apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo pdo_pgsql
-RUN apt-get install git -yqq
-RUN docker-php-ext-install pdo_pgsql
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
-RUN php --version
-RUN php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');"
-RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+FROM ubuntu:rolling
+RUN apt-get update
+RUN apt-get update
+RUN apt-get install -y libpq-dev zip locate tree unzip git php-cli php-dev php-pgsql php-pear php-xdebug composer php-mbstring php-xml
+RUN echo "[Xdebug]" >> /etc/php/7.1/cli/php.ini
+RUN echo zend_extension="/usr/lib/php/20160303/xdebug.so" >> /etc/php/7.1/cli/php.ini
 COPY . /var/www/html/
 WORKDIR /var/www/html/
-RUN composer update
+RUN composer update --no-plugins --no-scripts
 RUN chmod +x vendor/bin/phpunit
-CMD ["vendor/bin/phpunit", "--configuration phpunit_pgsql.xml --coverage-text"]
+CMD ["vendor/bin/phpunit", "--debug --no-plugins --no-scripts --configuration phpunit_pgsql.xml --coverage-text"]
